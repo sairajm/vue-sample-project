@@ -3,7 +3,12 @@
     <h1>{{ firstNumber }}</h1>
     <h3 v-show="showInputText"> {{ inputText}} </h3>
     <input type="text" v-model="inputNumber" id="box" :placeholder="placeHolderText"/>
-    <input type="button" v-on:click="plus()" value="+"/>
+    <input type="button" v-on:click="validate(inputNumber) ? add() : setError()" value="+"/>
+    <input type="button" v-on:click="validate(inputNumber) ? subtract(): setError()" value="-"/>
+    <input type="button" v-on:click="validate(inputNumber) ? multiply(): setError()" value="*"/>
+    <input type="button" v-on:click="validate(inputNumber) ? divide(): setError()" value="/"/>
+
+    <p v-show="showErrorText"> Input has to be a number </p>
   </div>
 </template>
 
@@ -24,10 +29,11 @@ export default {
       placeHolderText: 'Enter the first number',
       plusDisabled: false,
       showInputText: false,
+      showErrorText: false,
     }
   },
   methods: {
-    plus: function() {
+    add: function() {
       if(this.inputText) {
         this.showInputText = true;
         this.inputText = this.inputText + "+" + this.inputNumber;
@@ -35,9 +41,62 @@ export default {
         this.inputText = this.inputNumber;
       }
       this.firstNumber = parseFloat(this.firstNumber) + parseFloat(this.inputNumber);
-      this.placeHolderText = 'Enter the second number',
-      this.inputNumber = ""
+      this.placeHolderText = 'Enter the second number';
+      this.inputNumber = "";
+      this.showErrorText = false;
     },
+    subtract: function() {
+      if(this.inputText) {
+        this.showInputText = true;
+        this.inputText = this.inputText + "-" + this.inputNumber;
+      } else {
+        this.inputText = this.inputNumber;
+      }
+      this.firstNumber = parseFloat(this.firstNumber) - parseFloat(this.inputNumber);
+      this.placeHolderText = 'Enter the second number';
+      this.inputNumber = "";
+    },
+    multiply: function() {
+      if(this.inputText) {
+        this.showInputText = true;
+        this.inputText = this.inputText + "*" + this.inputNumber;
+      } else {
+        this.inputText = this.inputNumber;
+      }
+      this.firstNumber = parseFloat(this.firstNumber) * parseFloat(this.inputNumber);
+      this.placeHolderText = 'Enter the second number';
+      this.inputNumber = "";
+      this.showErrorText = false;
+    },
+    divide: function() {
+      if(this.inputText) {
+        this.showInputText = true;
+        this.inputText = this.inputText + "/" + this.inputNumber;
+      } else {
+        this.inputText = this.inputNumber;
+      }
+
+      if(!parseFloat(this.inputNumber)) {
+        this.placeHolderText = 'Cannot divide a number by zero.',
+        this.inputNumber = "";
+      } else {
+        this.firstNumber = parseFloat(this.firstNumber) / parseFloat(this.inputNumber);
+        this.placeHolderText = 'Enter the second number';
+        this.inputNumber = "";
+      }
+      this.showErrorText = false;
+    },
+    validate: function(input) {
+      var boxedInput = parseFloat(input);
+      if(boxedInput) {
+        return true;
+      }
+
+      return false;
+    },
+    setError: function() {
+      this.showErrorText = true;
+    }
 
   }
 }
