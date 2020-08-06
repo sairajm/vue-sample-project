@@ -2,7 +2,11 @@
   <div class="calculator">
     <h1>{{ firstNumber }}</h1>
     <h3 v-show="showInputText"> {{ inputText}} </h3>
-    <input type="text" v-model="inputNumber" id="box" :placeholder="placeHolderText"/>
+    <input type="text" v-model="inputNumber" id="box" :placeholder="placeHolderText" 
+    @keyup.107="validate(inputNumber) ? add() : setError()"
+    @keyup.109="validate(inputNumber) ? subtract() : setError()"
+    @keyup.106="validate(inputNumber) ? multiply() : setError()"
+    @keyup.111="validate(inputNumber) ? divide() : setError()"/>
     <input type="button" v-on:click="validate(inputNumber) ? add() : setError()" value="+"/>
     <input type="button" v-on:click="validate(inputNumber) ? subtract(): setError()" value="-"/>
     <input type="button" v-on:click="validate(inputNumber) ? multiply(): setError()" value="*"/>
@@ -36,9 +40,9 @@ export default {
     add: function() {
       if(this.inputText) {
         this.showInputText = true;
-        this.inputText = this.inputText + "+" + this.inputNumber;
+        this.inputText = this.inputText + "+" + parseFloat(this.inputNumber);
       } else {
-        this.inputText = this.inputNumber;
+        this.inputText = parseFloat(this.inputNumber);
       }
       this.firstNumber = parseFloat(this.firstNumber) + parseFloat(this.inputNumber);
       this.placeHolderText = 'Enter the second number';
@@ -48,9 +52,9 @@ export default {
     subtract: function() {
       if(this.inputText) {
         this.showInputText = true;
-        this.inputText = this.inputText + "-" + this.inputNumber;
+        this.inputText = this.inputText + "-" + parseFloat(this.inputNumber);
       } else {
-        this.inputText = this.inputNumber;
+        this.inputText = parseFloat(this.inputNumber);
       }
       this.firstNumber = parseFloat(this.firstNumber) - parseFloat(this.inputNumber);
       this.placeHolderText = 'Enter the second number';
@@ -59,9 +63,9 @@ export default {
     multiply: function() {
       if(this.inputText) {
         this.showInputText = true;
-        this.inputText = this.inputText + "*" + this.inputNumber;
+        this.inputText = this.inputText + "*" + parseFloat(this.inputNumber);
       } else {
-        this.inputText = this.inputNumber;
+        this.inputText = parseFloat(this.inputNumber);
       }
       this.firstNumber = parseFloat(this.firstNumber) * parseFloat(this.inputNumber);
       this.placeHolderText = 'Enter the second number';
@@ -71,9 +75,9 @@ export default {
     divide: function() {
       if(this.inputText) {
         this.showInputText = true;
-        this.inputText = this.inputText + "/" + this.inputNumber;
+        this.inputText = this.inputText + "/" + parseFloat(this.inputNumber);
       } else {
-        this.inputText = this.inputNumber;
+        this.inputText = parseFloat(this.inputNumber);
       }
 
       if(!parseFloat(this.inputNumber)) {
@@ -97,8 +101,7 @@ export default {
     setError: function() {
       this.showErrorText = true;
     }
-
-  }
+  },
 }
 </script>
 
