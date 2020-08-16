@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'InputBox',
+  name: 'Calculator',
   props: {
     msg: {
       type: String,

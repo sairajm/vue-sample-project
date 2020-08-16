@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <InputBox/>
+    <Calculator/>
+    <div class="emptyBox"></div>
+    <ToDoList/>
   </div>
 </template>
 
 <script>
-import InputBox from './components/InputBox.vue'
-
+import Calculator from './components/Calculator.vue'
+import ToDoList from './components/ToDoList.vue'
 export default {
   name: 'App',
   components: {
-    InputBox
+    Calculator,
+    ToDoList,
   }
 }
 </script>
@@ -23,5 +26,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.emptyBox {
+  height: 100px;
+  width: 800px;
 }
 </style>
